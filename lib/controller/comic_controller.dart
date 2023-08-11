@@ -18,6 +18,16 @@ class ComicController extends GetxController {
 
   var isLoading = false.obs;
   var characters = <Character>[].obs;
+  var character = Character(
+          id: 0,
+          image: {},
+          name: '',
+          origin: '',
+          aliases: '',
+          deck: '',
+          realName: '')
+      .obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -54,14 +64,18 @@ class ComicController extends GetxController {
     } catch (e) {
       log('Error while getting data is $e');
       Get.snackbar(
-          'Error while Fetching',
-          "${e.toString()}",
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 1),
-        );
+        'Error while Fetching',
+        "${e.toString()}",
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 1),
+      );
     } finally {
       isLoading(false);
     }
+  }
+
+  void setCharacter(Character c){
+    character(c);
   }
 
 }

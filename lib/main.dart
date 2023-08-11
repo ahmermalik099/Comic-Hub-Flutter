@@ -1,4 +1,5 @@
 import 'package:comic_hub/view/Home/home.dart';
+import 'package:comic_hub/view/details/details.dart';
 import 'package:comic_hub/view/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,11 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/home',
           page: () => HomeScreen(),
+          transition: Transition.fadeIn,
+        ),
+        GetPage(
+          name: '/details',
+          page: () => DetailsScreen(),
           transition: Transition.fadeIn,
         ),
       ],

@@ -10,7 +10,7 @@ class ApiService {
   final String BASE_URL = 'https://comicvine.gamespot.com/api';
 
   Future<http.Response> getCharacters() async {
-    var url = Uri.parse('$BASE_URL/characters/?api_key=$API_KEY&format=json&limit=12');
+    var url = Uri.parse('$BASE_URL/characters/?api_key=$API_KEY&format=json&limit=20');
 
     
     return await http.get(url);
