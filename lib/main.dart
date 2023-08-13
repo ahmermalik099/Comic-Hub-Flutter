@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       getPages: [
         GetPage(
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           page: () => DetailsScreen(),
           transition: Transition.fadeIn,
         ),
+        //come
       ],
     );
   }
