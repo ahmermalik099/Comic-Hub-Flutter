@@ -13,25 +13,25 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Obx(
-          () => comicController.isLoading.value
+              () => comicController.isLoading.value
               ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+            child: CircularProgressIndicator(),
+          )
               : SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (var character in comicController.characters)
-                        GestureDetector(
-                          onTap: (){
-                            comicController.setCharacter(character);
-                            // obviously I can pass the character through constructor but im just testing the flexibility of GetX
-                            Get.toNamed('/details');
-                          },
-                            child: MyHomeCard(character: character),),
-                    ],
-                  ),
-                ),
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                for (var character in comicController.characters)
+                  GestureDetector(
+                    onTap: (){
+                      comicController.setCharacter(character);
+                      // obviously I can pass the character through constructor but im just testing the flexibility of GetX
+                      Get.toNamed('/details');
+                    },
+                    child: MyHomeCard(character: character),),
+              ],
+            ),
+          ),
         ),
       ),
     );
