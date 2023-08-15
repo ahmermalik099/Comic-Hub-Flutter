@@ -18,7 +18,7 @@ class ApiService {
 
 
   Future<http.Response> getTeams() async {
-    var url = Uri.parse('$BASE_URL/teams/?api_key=$API_KEY&format=json&limit=20');
+    var url = Uri.parse('$BASE_URL/teams/?api_key=$API_KEY&format=json&limit=1');
 
     return await http.get(url);
   }

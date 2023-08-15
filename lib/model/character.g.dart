@@ -16,7 +16,7 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       aliases: json['aliases'] as String? ?? '',
       deck: json['deck'] as String? ?? '',
       realName: json['real_name'] as String? ?? '',
-      noOfMembers: json['noOfMembers'] as String? ?? '',
+      noOfMembers: json['count_of_team_members'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{

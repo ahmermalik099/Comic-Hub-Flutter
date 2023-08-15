@@ -60,7 +60,7 @@ class ComicController extends GetxController {
 
         Get.snackbar(
           'Data Fetched successfully',
-          "${characters.value.length.toString()}",
+          "${characters.length.toString()}",
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 1),
         );
@@ -101,18 +101,30 @@ class ComicController extends GetxController {
       if (response.statusCode == 200) {
         ///data successfully
         List<dynamic> teamsJson = jsonDecode(response.body)['results'];
-        print(teamsJson);
-        print(teamsJson[0]);
-        print(teamsJson[0]['name']);
-        print(teamsJson[0]['deck']);
-        print(teamsJson[0]['id']);
+
+        List<Character> ts = [];
+        for (var team in teamsJson) {
+          
+          log('${team['aliases']}');
+          log('${team['deck']}');
+          log('${team['real_name']}');
+          log('${team['noOfMembers']}');
+          log('${team['aliases']}');
+          log('${team['aliases']}');
+          ts.add(Character.fromJson(team));
+        }
+        // log(teamsJson[0]['name']);
+        // log(teamsJson[0]['deck']);
+        // log(teamsJson[0]['id'].toString());
+        // log("${teamsJson[0]['image']}");
+        // log("${teamsJson[0]['origin']}");
+        // // log("${teamsJson[0]['deck']}");
+        // log("${teamsJson[0]['real_name']}");
+        // log("${teamsJson[0]['noOfMembers']}");
         // parsing to model
         //teams.value =
-        teams.value =
-            //teamsJson.map((e) => Teams.fromJson(e)).toList();
-            teamsJson.map((e) => Character.fromJson(e)).toList();
-            print(teams.value);
-            print(teams.value.length);
+        teams(ts);
+
         // Get.snackbar(
         //   'Data Fetched successfully',
         //   "${teams.value.length.toString()}",

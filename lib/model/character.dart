@@ -7,7 +7,7 @@ class Character {
   String? deck;
   int? id;
   String? name;
-  String? noOfMembers;
+  int? noOfMembers;
 
 
   @JsonKey(name: 'real_name')
@@ -19,14 +19,14 @@ class Character {
   String? origin;
 
   Character({
-    this.id=0,
-    this.name='',
-    this.image,
+    required this.id,
+    required this.name,
+    required this.image,
     this.origin='',
     this.aliases='',
     this.deck='',
     this.realName='',
-    this.noOfMembers='',
+    this.noOfMembers=0,
   });
 
   factory Character.fromJson(Map<String, dynamic> json) =>
@@ -34,7 +34,7 @@ class Character {
       
   Map<String, dynamic> toJson() => _$CharacterToJson(this);
 
-  static String _readOrigin(Map<dynamic, dynamic> json, String key) {
-    return json[key]['name'] as String;
+  static dynamic _readOrigin(Map<dynamic, dynamic> json, String key) {
+    return json[key]?['name'] ?? '';
   }
 }
