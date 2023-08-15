@@ -24,6 +24,7 @@ class LoginScreen extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 Get.toNamed('/bottomBar');
+                //Get.toNamed('/home');
               },
               child: const Text('Login'),
             )
