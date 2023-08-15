@@ -15,8 +15,9 @@ class DetailsScreen extends StatelessWidget {
           () => Column(
             children: [
               Image.network(
-                  comicController.character.value.image['super_url']!),
-              Text(comicController.character.value.name),
+                  comicController.character.value.image!['super_url']!),
+              Text(comicController.character.value.name!),
+              Text(comicController.character.value.deck.toString()),
             ],
           ),
         ),

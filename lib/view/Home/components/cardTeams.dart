@@ -2,10 +2,10 @@ import 'package:comic_hub/model/character.dart';
 import 'package:comic_hub/model/teams.dart';
 import 'package:flutter/material.dart';
 
-class MyHomeCard extends StatelessWidget {
-  //const MyHomeCard({super.key, this.character, this.teams});
-  const MyHomeCard({super.key, this.character,});
-  final Character? character;
+class MyTeamCard extends StatelessWidget {
+  //const MyTeamCard({super.key, this.character, this.teams});
+  const MyTeamCard({super.key, this.team, });
+  final Character? team;
   //final Teams? teams;
   @override
   Widget build(BuildContext context) {
@@ -17,12 +17,14 @@ class MyHomeCard extends StatelessWidget {
         children: [
           Expanded(
             child: Image.network(
-              character?.image?['screen_url'] ?? '',
+              //teams!.image['screen_url']!,
+              team?.image?['screen_url']?? '',
               fit: BoxFit.cover,
             ),
           ),
           Text(
-            character?.name?? '',
+            //teams!.name,
+            team?.name ?? 'NULL',
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

@@ -5,25 +5,28 @@ part 'character.g.dart';
 class Character {
   String? aliases;
   String? deck;
-  int id;
-  String name;
+  int? id;
+  String? name;
+  String? noOfMembers;
+
 
   @JsonKey(name: 'real_name')
   String? realName;
 
-  Map<String, String> image;
+  Map<String, String>? image;
 
   @JsonKey(name: 'origin', readValue: _readOrigin)
-  String origin;
+  String? origin;
 
   Character({
-    required this.id,
-    required this.name,
-    required this.image,
-    required this.origin,
-    this.aliases,
-    this.deck,
-    this.realName,
+    this.id=0,
+    this.name='',
+    this.image,
+    this.origin='',
+    this.aliases='',
+    this.deck='',
+    this.realName='',
+    this.noOfMembers='',
   });
 
   factory Character.fromJson(Map<String, dynamic> json) =>

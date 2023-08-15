@@ -1,5 +1,6 @@
 import 'package:comic_hub/controller/comic_controller.dart';
 import 'package:comic_hub/view/Home/components/card.dart';
+import 'package:comic_hub/view/Home/components/cardTeams.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,6 +20,7 @@ class HomeScreen extends StatelessWidget {
           )
               : Column(
                 children: [
+                  Text('All Heros'),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -34,6 +36,27 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+
+
+                  ////////////////////////
+                  //ALL TEAMS
+                  Text('All Teams'),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (var teams in comicController.teams)
+                          GestureDetector(
+                            onTap: (){
+                              comicController.setTeam(teams);
+                              // obviously I can pass the character through constructor but im just testing the flexibility of GetX
+                              Get.toNamed('/details');
+                            },
+                            child: MyTeamCard(team: teams),),
+                      ],
+                    ),
+                  ),
+
                 ],
               ),
         ),
