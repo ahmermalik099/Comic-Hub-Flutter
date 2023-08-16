@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../main.dart';
 import '../Home/home.dart';
 import '../details/details.dart';
+import '../search/search.dart';
 
 class NavPage extends StatefulWidget {
   const NavPage({Key? key}) : super(key: key);
@@ -21,11 +22,12 @@ class _NavPageState extends State<NavPage> {
 
   /// Controller to handle bottom nav bar and also handles initial page
   final _controller = NotchBottomBarController(index: 0);
-  int maxCount = 2;
+  int maxCount = 4;
 
   final List<Widget> bottomBarPages = [
     HomeScreen(),
     Page1(),
+    Search(),
   ];
 
   @override
@@ -61,19 +63,43 @@ class _NavPageState extends State<NavPage> {
                 Icons.home_filled,
                 color: Colors.blueAccent,
               ),
-              itemLabel: 'Page 1',
+              itemLabel: 'Home',
             ),
 
             const BottomBarItem(
               inActiveItem: Icon(
-                Icons.star,
+                Icons.collections_bookmark_outlined,
                 color: Colors.blueGrey,
               ),
               activeItem: Icon(
-                Icons.star,
+                Icons.collections_bookmark_outlined,
                 color: Colors.blueAccent,
               ),
-              itemLabel: 'Page 2',
+              itemLabel: 'Collection',
+            ),
+
+            const BottomBarItem(
+              inActiveItem: Icon(
+                Icons.search,
+                color: Colors.blueGrey,
+              ),
+              activeItem: Icon(
+                Icons.search,
+                color: Colors.blueAccent,
+              ),
+              itemLabel: 'Search',
+            ),
+
+            const BottomBarItem(
+              inActiveItem: Icon(
+                Icons.person,
+                color: Colors.blueGrey,
+              ),
+              activeItem: Icon(
+                Icons.person,
+                color: Colors.blueAccent,
+              ),
+              itemLabel: 'Profile',
             ),
           ]
 

@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 
 import '../../../styles/styleSheet.dart';
 
-class MyTeamCard extends StatelessWidget {
+class MyIssuesCard extends StatelessWidget {
   //const MyTeamCard({super.key, this.character, this.teams});
-  const MyTeamCard({super.key, this.team, });
-  final Character? team;
-  //final Teams? teams;
+  const MyIssuesCard({super.key, this.issue, });
+  final Character? issue;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,12 +18,12 @@ class MyTeamCard extends StatelessWidget {
         children: [
           Expanded(
             child: Image.network(
-              team?.image?['screen_url']?? '',
+              issue?.image?['screen_url']?? '',
               fit: BoxFit.cover,
             ),
           ),
           Text(
-            team?.name ?? 'NULL',
+            issue?.name ?? 'NULL',
             style: cardTextStyle,
           ),
         ],

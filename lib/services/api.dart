@@ -10,18 +10,37 @@ class ApiService {
   final String BASE_URL = 'https://comicvine.gamespot.com/api';
 
   Future<http.Response> getCharacters() async {
-    var url = Uri.parse('$BASE_URL/characters/?api_key=$API_KEY&format=json&limit=20');
+    var url = Uri.parse('$BASE_URL/characters/?api_key=$API_KEY&format=json');
 
     
     return await http.get(url);
   }
 
-
+  //teams
   Future<http.Response> getTeams() async {
-    var url = Uri.parse('$BASE_URL/teams/?api_key=$API_KEY&format=json&limit=1');
+    var url = Uri.parse('$BASE_URL/teams/?api_key=$API_KEY&format=json');
 
     return await http.get(url);
   }
 
+  //issues
+  Future<http.Response> getIssues() async {
+    var url = Uri.parse('$BASE_URL/issues/?api_key=$API_KEY&format=json');
+
+    return await http.get(url);
+  }
+  //Series
+  Future<http.Response> getSeries() async {
+    var url = Uri.parse('$BASE_URL/series_list/?api_key=$API_KEY&format=json');
+
+    return await http.get(url);
+  }
+
+  //Movies
+  Future<http.Response> getMovies() async {
+    var url = Uri.parse('$BASE_URL/movies/?api_key=$API_KEY&format=json');
+
+    return await http.get(url);
+  }
 
 }

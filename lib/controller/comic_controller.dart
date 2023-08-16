@@ -20,6 +20,9 @@ class ComicController extends GetxController {
   var isLoading = false.obs;
   var characters = <Character>[].obs;
   var teams = <Character>[].obs;
+  var issues = <Character>[].obs;
+  var series = <Character>[].obs;
+  var movies = <Character>[].obs;
   var character = Character(
           id: 0,
           image: {},
@@ -38,6 +41,34 @@ class ComicController extends GetxController {
           deck: '',
           realName: '')
       .obs;
+var issue = Character(
+          id: 0,
+          image: {},
+          name: '',
+          origin: '',
+          aliases: '',
+          deck: '',
+          realName: '')
+  .obs;
+  var serie = Character(
+      id: 0,
+      image: {},
+      name: '',
+      origin: '',
+      aliases: '',
+      deck: '',
+      realName: '')
+      .obs;
+
+  var movie = Character(
+      id: 0,
+      image: {},
+      name: '',
+      origin: '',
+      aliases: '',
+      deck: '',
+      realName: '')
+      .obs;
 
   @override
   void onInit() {
@@ -45,6 +76,9 @@ class ComicController extends GetxController {
     // call API
     getCharacters();
     getTeams();
+    getIssues();
+    getSeries();
+    getMovies();
   }
 
   void getCharacters() async {
@@ -91,7 +125,6 @@ class ComicController extends GetxController {
   }
 
 
-
   //get teams
 
   void getTeams() async {
@@ -105,26 +138,10 @@ class ComicController extends GetxController {
         List<Character> ts = [];
         for (var team in teamsJson) {
           
-          log('${team['aliases']}');
-          log('${team['deck']}');
-          log('${team['real_name']}');
-          log('${team['noOfMembers']}');
-          log('${team['aliases']}');
-          log('${team['aliases']}');
+
           ts.add(Character.fromJson(team));
         }
-        // log(teamsJson[0]['name']);
-        // log(teamsJson[0]['deck']);
-        // log(teamsJson[0]['id'].toString());
-        // log("${teamsJson[0]['image']}");
-        // log("${teamsJson[0]['origin']}");
-        // // log("${teamsJson[0]['deck']}");
-        // log("${teamsJson[0]['real_name']}");
-        // log("${teamsJson[0]['noOfMembers']}");
-        // parsing to model
-        //teams.value =
         teams(ts);
-
         // Get.snackbar(
         //   'Data Fetched successfully',
         //   "${teams.value.length.toString()}",
@@ -155,6 +172,158 @@ class ComicController extends GetxController {
 
   void setTeam(Character t){
     team(t);
+  }
+
+
+  //get Issues
+
+  void getIssues() async {
+    isLoading(true);
+    try {
+      var response = await ApiService().getIssues();
+      if (response.statusCode == 200) {
+        ///data successfully
+        List<dynamic> issuesJson = jsonDecode(response.body)['results'];
+
+        List<Character> iss = [];
+        for (var issue in issuesJson) {
+
+          iss.add(Character.fromJson(issue));
+        }
+
+        issues(iss);
+
+        // Get.snackbar(
+        //   'Data Fetched successfully',
+        //   "${teams.value.length.toString()}",
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   duration: const Duration(seconds: 1),
+        // );
+      } else {
+        ///error
+        Get.snackbar(
+          'Error while Fetching',
+          "${response.statusCode.toString()}",
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 3),
+        );
+      }
+    } catch (e) {
+      log('Error while getting data is $e');
+      Get.snackbar(
+        'Error while Fetching',
+        "${e.toString()}",
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+      );
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void setIssues(Character i){
+    issue(i);
+  }
+
+  //series List
+
+  void getSeries() async {
+    isLoading(true);
+    try {
+      var response = await ApiService().getSeries();
+      if (response.statusCode == 200) {
+        ///data successfully
+        List<dynamic> seriesJson = jsonDecode(response.body)['results'];
+
+        List<Character> iss = [];
+        for (var series in seriesJson) {
+
+          iss.add(Character.fromJson(series));
+        }
+
+        series(iss);
+
+        // Get.snackbar(
+        //   'Data Fetched successfully',
+        //   "${teams.value.length.toString()}",
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   duration: const Duration(seconds: 1),
+        // );
+      } else {
+        ///error
+        Get.snackbar(
+          'Error while Fetching',
+          "${response.statusCode.toString()}",
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 3),
+        );
+      }
+    } catch (e) {
+      log('Error while getting data is $e');
+      Get.snackbar(
+        'Error while Fetching',
+        "${e.toString()}",
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+      );
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void setSeries(Character i){
+    serie(i);
+  }
+
+
+  //Movies
+
+  void getMovies() async {
+    isLoading(true);
+    try {
+      var response = await ApiService().getMovies();
+      if (response.statusCode == 200) {
+        ///data successfully
+        List<dynamic> moviesJson = jsonDecode(response.body)['results'];
+
+        List<Character> mov = [];
+        for (var movies in moviesJson) {
+
+          mov.add(Character.fromJson(movies));
+        }
+
+        movies(mov);
+
+        // Get.snackbar(
+        //   'Data Fetched successfully',
+        //   "${teams.value.length.toString()}",
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   duration: const Duration(seconds: 1),
+        // );
+      } else {
+        ///error
+        Get.snackbar(
+          'Error while Fetching',
+          "${response.statusCode.toString()}",
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 3),
+        );
+      }
+    } catch (e) {
+      log('Error while getting data is $e');
+      Get.snackbar(
+        'Error while Fetching',
+        "${e.toString()}",
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+      );
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void setMovies(Character i){
+    movie(i);
   }
 
 

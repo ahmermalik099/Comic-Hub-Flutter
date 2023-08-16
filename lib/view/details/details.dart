@@ -18,6 +18,7 @@ class DetailsScreen extends StatelessWidget {
                   comicController.character.value.image!['super_url']!),
               Text(comicController.character.value.name!),
               Text(comicController.character.value.deck.toString()),
+
             ],
           ),
         ),
