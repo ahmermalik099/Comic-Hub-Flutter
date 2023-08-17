@@ -23,7 +23,17 @@ class ComicController extends GetxController {
   var issues = <Character>[].obs;
   var series = <Character>[].obs;
   var movies = <Character>[].obs;
+  var searches = <Character>[].obs;
   var character = Character(
+          id: 0,
+          image: {},
+          name: '',
+          origin: '',
+          aliases: '',
+          deck: '',
+          realName: '')
+      .obs;
+  var search = Character(
           id: 0,
           image: {},
           name: '',
@@ -326,6 +336,54 @@ var issue = Character(
     movie(i);
   }
 
+
+
+  ////////////////////////////////
+  ///Serach
+
+  void getSearch() async {
+    isLoading(true);
+    try {
+      var response = await ApiService().getSearch();
+      if (response.statusCode == 200) {
+        ///data successfully
+        List<dynamic> searchJson = jsonDecode(response.body)['results'];
+        // parsing to model
+        characters.value =
+            searchJson.map((e) => Character.fromJson(e)).toList();
+        print(searchJson);
+
+        Get.snackbar(
+          'Data Fetched successfully',
+          "${characters.length.toString()}",
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 1),
+        );
+      } else {
+        ///error
+        Get.snackbar(
+          'Error while Fetching',
+          "${response.statusCode.toString()}",
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 1),
+        );
+      }
+    } catch (e) {
+      log('Error while getting data is $e');
+      Get.snackbar(
+        'Error while Fetching',
+        "${e.toString()}",
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 1),
+      );
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  void setSearch(Character c){
+    search(c);
+  }
 
 
 }

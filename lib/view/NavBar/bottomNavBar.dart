@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
 import 'package:animated_notch_bottom_bar/animated_notch_bottom_bar/animated_notch_bottom_bar.dart';
+import 'package:comic_hub/view/profile/profile.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
@@ -28,6 +29,7 @@ class _NavPageState extends State<NavPage> {
     HomeScreen(),
     Page1(),
     Search(),
+    ProfilePage(),
   ];
 
   @override

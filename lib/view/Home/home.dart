@@ -3,6 +3,7 @@ import 'package:comic_hub/view/Home/components/card.dart';
 import 'package:comic_hub/view/Home/components/cardMovies.dart';
 import 'package:comic_hub/view/Home/components/cardSeries.dart';
 import 'package:comic_hub/view/Home/components/cardTeams.dart';
+import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,154 +17,205 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return DraggableHome(
+      leading: const Icon(Icons.arrow_back_ios),
+      title: const Text("Comic Hub"),
+      actions: [
+        IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
+      ],
+      headerWidget: headerWidget(context),
+      headerBottomBar: headerBottomBarWidget(),
+      body: [
+        Container(
         child: Obx(
-          () => comicController.isLoading.value
+              () => comicController.isLoading.value
               ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+            child: CircularProgressIndicator(),
+          )
               : SingleChildScrollView(
             scrollDirection: Axis.vertical,
-                child: Column(
+            child: Column(
+              children: [
+                Text(
+                  'All Heros',
+                  style: headingTextStyle,
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(height: 10,),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
                     children: [
-                      Text(
-                        'All Heros',
-                        style: headingTextStyle,
-                        textAlign: TextAlign.left,
-                      ),
-                      SizedBox(height: 10,),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (var character in comicController.characters)
-                              GestureDetector(
-                                onTap: () {
-                                  comicController.setCharacter(character);
-                                  // obviously I can pass the character through constructor but im just testing the flexibility of GetX
-                                  Get.toNamed('/details');
-                                },
-                                child: MyHomeCard(character: character),
-                              ),
-                          ],
+                      for (var character in comicController.characters)
+                        GestureDetector(
+                          onTap: () {
+                            comicController.setCharacter(character);
+                            // obviously I can pass the character through constructor but im just testing the flexibility of GetX
+                            Get.toNamed('/details');
+                          },
+                          child: MyHomeCard(character: character),
                         ),
-                      ),
-
-                      ////////////////////////
-                      //ALL TEAMS
-                      Text(
-                        'All Teams',
-                        style: headingTextStyle,
-                        textAlign: TextAlign.left,
-
-                      ),
-                      SizedBox(height: 10,),
-
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (var teams in comicController.teams)
-                              GestureDetector(
-                                onTap: () {
-                                  comicController.setTeam(teams);
-                                  // obviously I can pass the character through constructor but im just testing the flexibility of GetX
-                                  Get.toNamed('/details');
-                                },
-                                child: MyTeamCard(team: teams),
-                              ),
-                          ],
-                        ),
-                      ),
-
-                      ///////////////////////
-                      //movies
-                      Text(
-                        'Movies',
-                        style: headingTextStyle,
-                        textAlign: TextAlign.left,
-                      ),
-                      SizedBox(height: 10,),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (var movies in comicController.movies)
-                              GestureDetector(
-                                onTap: () {
-                                  comicController.setMovies(movies);
-                                  // obviously I can pass the character through constructor but im just testing the flexibility of GetX
-                                  Get.toNamed('/details');
-                                },
-                                child: MyMoviesCard(movie: movies),
-                              ),
-                          ],
-                        ),
-                      ),
-
-
-                      //////////////////
-                      //All Series List
-
-                      Text(
-                        'Series',
-                        style: headingTextStyle,
-                        textAlign: TextAlign.left,
-                      ),
-                      SizedBox(height: 10,),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (var series in comicController.series)
-                              GestureDetector(
-                                onTap: () {
-                                  comicController.setSeries(series);
-                                  // obviously I can pass the character through constructor but im just testing the flexibility of GetX
-                                  Get.toNamed('/details');
-                                },
-                                child: MySeriesCard(serie: series),
-                              ),
-                          ],
-                        ),
-                      ),
-
-
-                      ////////////////////////
-                      //ALL ISSUES
-                      Text(
-                        'Issues',
-                        style: headingTextStyle,
-                        textAlign: TextAlign.left,
-
-                      ),
-                      SizedBox(height: 10,),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (var issues in comicController.issues)
-                              GestureDetector(
-                                onTap: () {
-                                  comicController.setIssues(issues);
-                                  // obviously I can pass the character through constructor but im just testing the flexibility of GetX
-                                  Get.toNamed('/details');
-                                },
-                                child: MyIssuesCard(issue: issues),
-                              ),
-                          ],
-                        ),
-                      ),
-
-
-
-
                     ],
                   ),
-              ),
+                ),
+
+                ////////////////////////
+                //ALL TEAMS
+                Text(
+                  'All Teams',
+                  style: headingTextStyle,
+                  textAlign: TextAlign.left,
+
+                ),
+                SizedBox(height: 10,),
+
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (var teams in comicController.teams)
+                        GestureDetector(
+                          onTap: () {
+                            comicController.setTeam(teams);
+                            // obviously I can pass the character through constructor but im just testing the flexibility of GetX
+                            Get.toNamed('/details');
+                          },
+                          child: MyTeamCard(team: teams),
+                        ),
+                    ],
+                  ),
+                ),
+
+                ///////////////////////
+                //movies
+                Text(
+                  'Movies',
+                  style: headingTextStyle,
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(height: 10,),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (var movies in comicController.movies)
+                        GestureDetector(
+                          onTap: () {
+                            comicController.setMovies(movies);
+                            // obviously I can pass the character through constructor but im just testing the flexibility of GetX
+                            Get.toNamed('/details');
+                          },
+                          child: MyMoviesCard(movie: movies),
+                        ),
+                    ],
+                  ),
+                ),
+
+
+                //////////////////
+                //All Series List
+
+                Text(
+                  'Series',
+                  style: headingTextStyle,
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(height: 10,),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (var series in comicController.series)
+                        GestureDetector(
+                          onTap: () {
+                            comicController.setSeries(series);
+                            // obviously I can pass the character through constructor but im just testing the flexibility of GetX
+                            Get.toNamed('/details');
+                          },
+                          child: MySeriesCard(serie: series),
+                        ),
+                    ],
+                  ),
+                ),
+
+
+                ////////////////////////
+                //ALL ISSUES
+                Text(
+                  'Issues',
+                  style: headingTextStyle,
+                  textAlign: TextAlign.left,
+
+                ),
+                SizedBox(height: 10,),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (var issues in comicController.issues)
+                        GestureDetector(
+                          onTap: () {
+                            comicController.setIssues(issues);
+                            // obviously I can pass the character through constructor but im just testing the flexibility of GetX
+                            Get.toNamed('/details');
+                          },
+                          child: MyIssuesCard(issue: issues),
+                        ),
+                    ],
+                  ),
+                ),
+
+
+
+
+              ],
+            ),
+          ),
         ),
       ),
+      ],
+      fullyStretchable: true,
+      //expandedBody: const NavPage(),
+      backgroundColor: Colors.white,
+      appBarColor: Colors.teal,
+    );
+
+  }
+
+  Row headerBottomBarWidget() {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: const [
+        Icon(
+          Icons.settings,
+          color: Colors.white,
+        ),
+      ],
+    );
+  }
+
+  Widget headerWidget(BuildContext context) {
+    return Container(
+      color: Colors.blue,
+      child: Center(
+        child: Text('Image here'),
+        ),
+
+
+
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
