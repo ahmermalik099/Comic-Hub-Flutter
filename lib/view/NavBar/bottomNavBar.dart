@@ -5,6 +5,7 @@ import 'package:comic_hub/view/profile/profile.dart';
 import 'package:flutter/material.dart';
 
 import '../../main.dart';
+import '../Collection/collection_options.dart';
 import '../Home/home.dart';
 import '../details/details.dart';
 import '../search/search.dart';
@@ -27,7 +28,7 @@ class _NavPageState extends State<NavPage> {
 
   final List<Widget> bottomBarPages = [
     HomeScreen(),
-    Page1(),
+    CollectionOptions(),
     Search(),
     ProfilePage(),
   ];
@@ -35,6 +36,7 @@ class _NavPageState extends State<NavPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: PageView(
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(),
