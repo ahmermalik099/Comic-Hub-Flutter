@@ -339,51 +339,51 @@ var issue = Character(
 
 
   ////////////////////////////////
-  ///Serach
+  // ///Serach
 
-  void getSearch() async {
-    isLoading(true);
-    try {
-      var response = await ApiService().getSearch();
-      if (response.statusCode == 200) {
-        ///data successfully
-        List<dynamic> searchJson = jsonDecode(response.body)['results'];
-        // parsing to model
-        characters.value =
-            searchJson.map((e) => Character.fromJson(e)).toList();
-        print(searchJson);
+  // void getSearch() async {
+  //   isLoading(true);
+  //   try {
+  //     var response = await ApiService().getSearch();
+  //     if (response.statusCode == 200) {
+  //       ///data successfully
+  //       List<dynamic> searchJson = jsonDecode(response.body)['results'];
+  //       // parsing to model
+  //       characters.value =
+  //           searchJson.map((e) => Character.fromJson(e)).toList();
+  //       print(searchJson);
 
-        Get.snackbar(
-          'Data Fetched successfully',
-          "${characters.length.toString()}",
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 1),
-        );
-      } else {
-        ///error
-        Get.snackbar(
-          'Error while Fetching',
-          "${response.statusCode.toString()}",
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 1),
-        );
-      }
-    } catch (e) {
-      log('Error while getting data is $e');
-      Get.snackbar(
-        'Error while Fetching',
-        "${e.toString()}",
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 1),
-      );
-    } finally {
-      isLoading(false);
-    }
-  }
+  //       Get.snackbar(
+  //         'Data Fetched successfully',
+  //         "${characters.length.toString()}",
+  //         snackPosition: SnackPosition.BOTTOM,
+  //         duration: const Duration(seconds: 1),
+  //       );
+  //     } else {
+  //       ///error
+  //       Get.snackbar(
+  //         'Error while Fetching',
+  //         "${response.statusCode.toString()}",
+  //         snackPosition: SnackPosition.BOTTOM,
+  //         duration: const Duration(seconds: 1),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     log('Error while getting data is $e');
+  //     Get.snackbar(
+  //       'Error while Fetching',
+  //       "${e.toString()}",
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       duration: const Duration(seconds: 1),
+  //     );
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
 
-  void setSearch(Character c){
-    search(c);
-  }
+  // void setSearch(Character c){
+  //   search(c);
+  // }
 
 
 }

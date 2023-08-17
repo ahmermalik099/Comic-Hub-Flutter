@@ -43,8 +43,8 @@ class ApiService {
     return await http.get(url);
   }
 
-  Future<http.Response> getSearch() async {
-    var url = Uri.parse('$BASE_URL/search/?api_key=$API_KEY&format=json&query=spider');
+  Future<http.Response> getSearch(s) async {
+    var url = Uri.parse('$BASE_URL/search/?api_key=$API_KEY&format=json&query=$s');
 
     return await http.get(url);
   }
