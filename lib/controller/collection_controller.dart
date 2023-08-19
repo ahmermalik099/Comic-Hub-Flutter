@@ -48,7 +48,7 @@ class CollectionController extends GetxController {
   void getCollections() async {
     isLoading(true);
     try {
-      var response = await ApiService().getCollection();
+      var response = await ApiService().getCharacters();
       if (response.statusCode == 200) {
         ///data successfully
         List<dynamic> charactersJson = jsonDecode(response.body)['results'];
