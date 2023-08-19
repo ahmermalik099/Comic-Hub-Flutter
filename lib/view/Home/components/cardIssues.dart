@@ -18,7 +18,7 @@ class MyIssuesCard extends StatelessWidget {
         children: [
           Expanded(
             child: Image.network(
-              issue?.image?['screen_url']?? '',
+              issue?.image?['screen_large_url']?? '',
               fit: BoxFit.cover,
             ),
           ),

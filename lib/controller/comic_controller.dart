@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:comic_hub/model/character.dart';
 import 'package:comic_hub/model/teams.dart';
 import 'package:comic_hub/services/api.dart';
+import 'package:comic_hub/view/Home/components/card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,7 +52,7 @@ class ComicController extends GetxController {
           deck: '',
           realName: '')
       .obs;
-var issue = Character(
+  var issue = Character(
           id: 0,
           image: {},
           name: '',
@@ -59,36 +60,50 @@ var issue = Character(
           aliases: '',
           deck: '',
           realName: '')
-  .obs;
+      .obs;
   var serie = Character(
-      id: 0,
-      image: {},
-      name: '',
-      origin: '',
-      aliases: '',
-      deck: '',
-      realName: '')
+          id: 0,
+          image: {},
+          name: '',
+          origin: '',
+          aliases: '',
+          deck: '',
+          realName: '')
       .obs;
 
   var movie = Character(
-      id: 0,
-      image: {},
-      name: '',
-      origin: '',
-      aliases: '',
-      deck: '',
-      realName: '')
+          id: 0,
+          image: {},
+          name: '',
+          origin: '',
+          aliases: '',
+          deck: '',
+          realName: '')
       .obs;
 
   @override
   void onInit() {
     super.onInit();
     // call API
+    buildGridCards(10);
     getCharacters();
     getTeams();
     getIssues();
     getSeries();
     getMovies();
+  }
+
+  void buildGridCards(int count) {
+    List<Character> cards = List.generate(
+      count,
+      (index) => Character(id: 0, image: {'screen_url': ''}, name: ''),
+    );
+    characters(cards);
+    teams(cards);
+    issues(cards);
+    series(cards);
+    movies(cards);
+
   }
 
   void getCharacters() async {
@@ -130,10 +145,9 @@ var issue = Character(
     }
   }
 
-  void setCharacter(Character c){
+  void setCharacter(Character c) {
     character(c);
   }
-
 
   //get teams
 
@@ -147,8 +161,6 @@ var issue = Character(
 
         List<Character> ts = [];
         for (var team in teamsJson) {
-          
-
           ts.add(Character.fromJson(team));
         }
         teams(ts);
@@ -180,10 +192,9 @@ var issue = Character(
     }
   }
 
-  void setTeam(Character t){
+  void setTeam(Character t) {
     team(t);
   }
-
 
   //get Issues
 
@@ -197,7 +208,6 @@ var issue = Character(
 
         List<Character> iss = [];
         for (var issue in issuesJson) {
-
           iss.add(Character.fromJson(issue));
         }
 
@@ -231,7 +241,7 @@ var issue = Character(
     }
   }
 
-  void setIssues(Character i){
+  void setIssues(Character i) {
     issue(i);
   }
 
@@ -247,7 +257,6 @@ var issue = Character(
 
         List<Character> iss = [];
         for (var series in seriesJson) {
-
           iss.add(Character.fromJson(series));
         }
 
@@ -281,10 +290,9 @@ var issue = Character(
     }
   }
 
-  void setSeries(Character i){
+  void setSeries(Character i) {
     serie(i);
   }
-
 
   //Movies
 
@@ -298,7 +306,6 @@ var issue = Character(
 
         List<Character> mov = [];
         for (var movies in moviesJson) {
-
           mov.add(Character.fromJson(movies));
         }
 
@@ -332,58 +339,54 @@ var issue = Character(
     }
   }
 
-  void setMovies(Character i){
+  void setMovies(Character i) {
     movie(i);
   }
-
-
 
   ////////////////////////////////
   ///Serach
 
-  void getSearch() async {
-    isLoading(true);
-    try {
-      var response = await ApiService().getSearch();
-      if (response.statusCode == 200) {
-        ///data successfully
-        List<dynamic> searchJson = jsonDecode(response.body)['results'];
-        // parsing to model
-        characters.value =
-            searchJson.map((e) => Character.fromJson(e)).toList();
-        print(searchJson);
+  // void getSearch() async {
+  //   isLoading(true);
+  //   try {
+  //     var response = await ApiService().getSearch(searchC);
+  //     if (response.statusCode == 200) {
+  //       ///data successfully
+  //       List<dynamic> searchJson = jsonDecode(response.body)['results'];
+  //       // parsing to model
+  //       characters.value =
+  //           searchJson.map((e) => Character.fromJson(e)).toList();
+  //       print(searchJson);
 
-        Get.snackbar(
-          'Data Fetched successfully',
-          "${characters.length.toString()}",
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 1),
-        );
-      } else {
-        ///error
-        Get.snackbar(
-          'Error while Fetching',
-          "${response.statusCode.toString()}",
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 1),
-        );
-      }
-    } catch (e) {
-      log('Error while getting data is $e');
-      Get.snackbar(
-        'Error while Fetching',
-        "${e.toString()}",
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 1),
-      );
-    } finally {
-      isLoading(false);
-    }
-  }
+  //       Get.snackbar(
+  //         'Data Fetched successfully',
+  //         "${characters.length.toString()}",
+  //         snackPosition: SnackPosition.BOTTOM,
+  //         duration: const Duration(seconds: 1),
+  //       );
+  //     } else {
+  //       ///error
+  //       Get.snackbar(
+  //         'Error while Fetching',
+  //         "${response.statusCode.toString()}",
+  //         snackPosition: SnackPosition.BOTTOM,
+  //         duration: const Duration(seconds: 1),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     log('Error while getting data is $e');
+  //     Get.snackbar(
+  //       'Error while Fetching',
+  //       "${e.toString()}",
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       duration: const Duration(seconds: 1),
+  //     );
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
 
-  void setSearch(Character c){
-    search(c);
-  }
-
-
+  // void setSearch(Character c){
+  //   search(c);
+  // }
 }

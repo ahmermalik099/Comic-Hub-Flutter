@@ -1,4 +1,5 @@
 import 'package:comic_hub/controller/comic_controller.dart';
+import 'package:comic_hub/model/character.dart';
 import 'package:comic_hub/view/Home/components/card.dart';
 import 'package:comic_hub/view/Home/components/cardMovies.dart';
 import 'package:comic_hub/view/Home/components/cardSeries.dart';
@@ -26,160 +27,203 @@ class HomeScreen extends StatelessWidget {
       headerWidget: headerWidget(context),
       headerBottomBar: headerBottomBarWidget(),
       body: [
-        Container(
-        child: Obx(
-              () => comicController.isLoading.value
-              ? const Center(
-            child: CircularProgressIndicator(),
-          )
-              : SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                Text(
-                  'All Heros',
-                  style: headingTextStyle,
-                  textAlign: TextAlign.left,
-                ),
-                SizedBox(height: 10,),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (var character in comicController.characters)
-                        GestureDetector(
-                          onTap: () {
-                            comicController.setCharacter(character);
-                            // obviously I can pass the character through constructor but im just testing the flexibility of GetX
-                            Get.toNamed('/details');
-                          },
-                          child: MyHomeCard(character: character),
-                        ),
-                    ],
-                  ),
-                ),
-
-                ////////////////////////
-                //ALL TEAMS
-                Text(
-                  'All Teams',
-                  style: headingTextStyle,
-                  textAlign: TextAlign.left,
-
-                ),
-                SizedBox(height: 10,),
-
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (var teams in comicController.teams)
-                        GestureDetector(
-                          onTap: () {
-                            comicController.setTeam(teams);
-                            // obviously I can pass the character through constructor but im just testing the flexibility of GetX
-                            Get.toNamed('/details');
-                          },
-                          child: MyTeamCard(team: teams),
-                        ),
-                    ],
-                  ),
-                ),
-
-                ///////////////////////
-                //movies
-                Text(
-                  'Movies',
-                  style: headingTextStyle,
-                  textAlign: TextAlign.left,
-                ),
-                SizedBox(height: 10,),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (var movies in comicController.movies)
-                        GestureDetector(
-                          onTap: () {
-                            comicController.setMovies(movies);
-                            // obviously I can pass the character through constructor but im just testing the flexibility of GetX
-                            Get.toNamed('/details');
-                          },
-                          child: MyMoviesCard(movie: movies),
-                        ),
-                    ],
-                  ),
-                ),
-
-
-                //////////////////
-                //All Series List
-
-                Text(
-                  'Series',
-                  style: headingTextStyle,
-                  textAlign: TextAlign.left,
-                ),
-                SizedBox(height: 10,),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (var series in comicController.series)
-                        GestureDetector(
-                          onTap: () {
-                            comicController.setSeries(series);
-                            // obviously I can pass the character through constructor but im just testing the flexibility of GetX
-                            Get.toNamed('/details');
-                          },
-                          child: MySeriesCard(serie: series),
-                        ),
-                    ],
-                  ),
-                ),
-
-
-                ////////////////////////
-                //ALL ISSUES
-                Text(
-                  'Issues',
-                  style: headingTextStyle,
-                  textAlign: TextAlign.left,
-
-                ),
-                SizedBox(height: 10,),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (var issues in comicController.issues)
-                        GestureDetector(
-                          onTap: () {
-                            comicController.setIssues(issues);
-                            // obviously I can pass the character through constructor but im just testing the flexibility of GetX
-                            Get.toNamed('/details');
-                          },
-                          child: MyIssuesCard(issue: issues),
-                        ),
-                    ],
-                  ),
-                ),
-
-
-
-
-              ],
+        Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Image.asset(
+                'assets/bg.jpeg',
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
+            Container(
+              child: Obx(
+                () => comicController.isLoading.value
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: [
+                            Text(
+                              'All Heros',
+                              style: headingTextStyle,
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              height: 200,
+                              child: ListView.builder(
+                                scrollDirection:
+                                    Axis.horizontal, // Scroll horizontally
+                                itemCount: comicController.characters.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var character =
+                                      comicController.characters[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      comicController.setCharacter(character);
+                                      // Navigate to character details screen
+                                      Get.toNamed('/details');
+                                    },
+                                    child: MyHomeCard(
+                                      character: character,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+
+                            //////////////////////
+                            // ALL TEAMS
+                            Text(
+                              'All Teams',
+                              style: headingTextStyle,
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+
+                            Container(
+                                                            height: 200,
+
+                              child: ListView.builder(
+                                scrollDirection:
+                                    Axis.horizontal, // Scroll vertically
+                                itemCount: comicController.teams.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var team = comicController.teams[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      comicController.setTeam(team);
+                                      // Navigate to team details screen
+                                      Get.toNamed('/details');
+                                    },
+                                    child: MyHomeCard(
+                                      character: team,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+
+                            ///////////////////////
+                            //movies
+                            Text(
+                              'Movies',
+                              style: headingTextStyle,
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                                                            height: 200,
+
+                              child: ListView.builder(
+                                scrollDirection:
+                                    Axis.horizontal, // Scroll vertically
+                                itemCount: comicController.movies.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var movie = comicController.movies[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      comicController.setMovies(movie);
+                                      // Navigate to movie details screen
+                                      Get.toNamed('/details');
+                                    },
+                                    child: MyHomeCard(
+                                      character: movie,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+
+                            //////////////////
+                            //All Series List
+
+                            Text(
+                              'Series',
+                              style: headingTextStyle,
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                                                            height: 200,
+
+                              child: ListView.builder(
+                                scrollDirection:
+                                    Axis.horizontal, // Scroll vertically
+                                itemCount: comicController.series.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var series = comicController.series[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      comicController.setSeries(series);
+                                      // Navigate to series details screen
+                                      Get.toNamed('/details');
+                                    },
+                                    child: MyHomeCard(
+                                      character: series,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+
+                            ////////////////////////
+                            //ALL ISSUES
+                            Text(
+                              'Issues',
+                              style: headingTextStyle,
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              height: 200,
+                              child: ListView.builder(
+                                scrollDirection:
+                                    Axis.horizontal, // Scroll vertically
+                                itemCount: comicController.issues.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var issue = comicController.issues[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      comicController.setIssues(issue);
+                                      // Navigate to issue details screen
+                                      Get.toNamed('/details');
+                                    },
+                                    child: MyHomeCard(
+                                      character: issue,
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+              ),
+            ),
+          ],
         ),
-      ),
       ],
       fullyStretchable: true,
       //expandedBody: const NavPage(),
+
       backgroundColor: Colors.white,
       appBarColor: Colors.teal,
     );
-
   }
 
   Row headerBottomBarWidget() {
@@ -201,21 +245,7 @@ class HomeScreen extends StatelessWidget {
       color: Colors.blue,
       child: Center(
         child: Text('Image here'),
-        ),
-
-
-
+      ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-

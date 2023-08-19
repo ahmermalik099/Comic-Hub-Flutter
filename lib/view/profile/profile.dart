@@ -3,8 +3,10 @@ import 'package:comic_hub/view/Home/components/card.dart';
 import 'package:comic_hub/view/Home/components/cardMovies.dart';
 import 'package:comic_hub/view/Home/components/cardSeries.dart';
 import 'package:comic_hub/view/Home/components/cardTeams.dart';
+import 'package:comic_hub/view/profile/settings.dart';
 // import 'package:comic_hub/view/Home/components/cardIssues.dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_side_menu/flutter_side_menu.dart';
 import 'package:get/get.dart';
 
 import '../../styles/styleSheet.dart';
@@ -17,56 +19,197 @@ import 'package:flutter/material.dart';
 
 //import 'camera_preview.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+
+
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+
+
+  final _controller = SideMenuController();
+  int _currentIndex = 0;
+
+  final List<Widget> tabBarPages = [
+    ProfilePage(),
+    //SettingPage()
+  ];
+
 
   @override
   Widget build(BuildContext context) {
-    return DraggableHome(
-      leading: const Icon(Icons.arrow_back_ios),
-      title: const Text("Draggable Home"),
-      actions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.settings)),
-      ],
-      headerWidget: headerWidget(context),
-      headerBottomBar: headerBottomBarWidget(),
-      body: [
+    return Scaffold(
+      body:Row(
+        children: [
+          SideMenu(
+            controller: _controller,
+            backgroundColor: Colors.white10,
+            mode: SideMenuMode.compact,
+            builder: (data) {
+              return SideMenuData(
+                header: const Text('Profile'),
+                items: [
+                  SideMenuItemDataTile(
+                    isSelected: _currentIndex == 0,
+                    onTap: () => setState(() => _currentIndex = 0),
+                    title: 'User Profile',
+                    hoverColor: Colors.blue,
+                    titleStyle: const TextStyle(color: Colors.white),
+                    icon: const Icon(Icons.home_outlined),
+                    selectedIcon: const Icon(Icons.home),
+                    badgeContent: const Text(
+                      '23',
+                      style: TextStyle(
+                        fontSize: 8,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  SideMenuItemDataTile(
+                    isSelected: _currentIndex == 1,
+                   // onTap: () => setState(() => _currentIndex = 1),
+                    onTap: () => Get.to(() => SettingPage()),
+                    title: 'Settings',
+                    selectedTitleStyle:
+                    const TextStyle(fontWeight: FontWeight.w700,color: Colors.yellow),
+                    icon: const Icon(Icons.table_bar_outlined),
+                    selectedIcon: const Icon(Icons.settings),
+                    titleStyle: const TextStyle(color: Colors.deepPurpleAccent),
+                  ),
+                  // const SideMenuItemDataTitle(
+                  //   title: 'Account',
+                  //   textAlign: TextAlign.center,
+                  // ),
+                  // SideMenuItemDataTile(
+                  //   isSelected: _currentIndex == 2,
+                  //   onTap: () => setState(() => _currentIndex = 2),
+                  //   title: 'Item 3',
+                  //   icon: const Icon(Icons.play_arrow),
+                  // ),
+                  // SideMenuItemDataTile(
+                  //   isSelected: _currentIndex == 3,
+                  //   onTap: () => setState(() => _currentIndex = 3),
+                  //   title: 'Item 4',
+                  //   icon: const Icon(Icons.car_crash),
+                  // ),
+                ],
+                footer: const Text('Comic Hub'),
+              );
+            },
+          ),
 
-      ],
-      fullyStretchable: true,
-      //expandedBody: const NavPage(),
-      backgroundColor: Colors.white,
-      appBarColor: Colors.teal,
-    );
-  }
+          ////Main body
+          Expanded(
+              child: UserDetails(),
+          )
 
-  Row headerBottomBarWidget() {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: const [
-        Icon(
-          Icons.settings,
-          color: Colors.white,
-        ),
-      ],
-    );
-  }
-
-  Widget headerWidget(BuildContext context) {
-    return Container(
-      color: Colors.blue,
-      child: Center(
-        child: Text(
-          "Title",
-          style: Theme.of(context)
-              .textTheme
-              .headline2!
-              .copyWith(color: Colors.white70),
-        ),
+        ],
       ),
     );
+
+  }
+}
+
+
+
+class UserDetails extends StatefulWidget {
+  const UserDetails({Key? key}) : super(key: key);
+
+  @override
+  State<UserDetails> createState() => _UserDetailsState();
+}
+
+class _UserDetailsState extends State<UserDetails> {
+
+  String email = 'Your Name';
+  String phoneNumber = '+123 456 7890';
+
+  void _editProfile() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        TextEditingController emailController =
+        TextEditingController(text: email);
+        TextEditingController phoneController =
+        TextEditingController(text: phoneNumber);
+
+        return AlertDialog(
+          title: Text('Edit Profile'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextField(
+                controller: emailController,
+                decoration: InputDecoration(labelText: 'Email'),
+              ),
+              TextField(
+                controller: phoneController,
+                decoration: InputDecoration(labelText: 'Phone Number'),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  email = emailController.text;
+                  phoneNumber = phoneController.text;
+                });
+                Navigator.of(context).pop();
+              },
+              child: Text('Save'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          color: Colors.white,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                CircleAvatar(
+                  radius: 100,
+                  backgroundImage: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHFXcvkgaVetaFH-J4M2yOrIUCBCUVRhkMcA&usqp=CAU').image,
+                ),
+                SizedBox(height: 10),
+                ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text(email),
+                ),
+                ListTile(
+                  leading: Icon(Icons.phone),
+                  title: Text(phoneNumber),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _editProfile,
+                  child: Text('Edit Profile'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
+
+
+

@@ -9,54 +9,87 @@ class MyHomeCard extends StatelessWidget {
   const MyHomeCard({
     super.key,
     this.character,
+    // this.color = Colors.blue,
   });
+  final Color color = Colors.black;
   final Character? character;
   //final Teams? teams;
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+      width: MediaQuery.of(context).size.width / 2,
+      height: MediaQuery.of(context).size.height / 4.5,
+      margin: EdgeInsets.only(bottom: 3, right: 4, top: 2),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(.05),
+              blurRadius: 5,
+              spreadRadius: 5)
+        ],
       ),
-      width: 200,
-      height: 200,
-      margin: const EdgeInsets.all(10),
-      child: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            width: 200,
-            height: 200,
-            child: Image.network(
-              
-              character?.image?['screen_url'] ?? '',
-              fit: BoxFit.cover,
-              
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.teal,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Stack(
+          fit: StackFit.passthrough,
+          children: [
+            character?.image?['screen_url'] == null ||
+                    character?.image?['screen_url'] == ""
+                ? Image.asset(
+                    'assets/bg.jpeg',
+                    fit: BoxFit.cover,
+                    //width: Image.asset("images/img2.png").width,
+                    //height: Image.asset("images/img2.png").height,
+                  )
+                : FadeInImage.assetNetwork(
+                    placeholder: 'assets/bg.jpeg',
+                    image: character!.image!['screen_url']!,
+                    fit: BoxFit.cover,
+                  ),
+
+// .network(character!.image!['screen_url']!,
+//                     fit: BoxFit.cover),
+            // character?.image?['screen_url'] == null ||
+            //         character?.image?['screen_url'] == ""
+            //     ? Center(
+            //         child: CircularProgressIndicator(),
+            //       )
+            //     : Container(),
+            Container(
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    // Color.fromARGB(255, 235, 235, 238).withOpacity(.4),
+                    color.withOpacity(.4),
+                    Colors.transparent,
+                    color.withOpacity(.9),
+                  ],
                 ),
               ),
-              child: Text(
-                character?.name ?? '',
-                style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+              child: Padding(
+                padding: EdgeInsets.only(left: 4),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      character?.name ?? "",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
