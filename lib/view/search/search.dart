@@ -1,75 +1,64 @@
-import 'dart:developer';
-// import 'dart:ffi';
-
-import 'package:comic_hub/controller/comic_controller.dart';
-import 'package:comic_hub/controller/search_controller.dart';
+import 'package:comic_hub/view/search/seaarchFunction.dart';
 import 'package:flutter/material.dart';
 import 'package:anim_search_bar/anim_search_bar.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../Home/components/card.dart';
 import 'package:comic_hub/controller/comic_controller.dart';
 
-class Search extends StatelessWidget {
-  Search({Key? key}) : super(key: key);
 
-  final SearchControllerX searchController = Get.put(SearchControllerX());
+class Search extends StatefulWidget {
+  const Search({Key? key}) : super(key: key);
 
-  final ComicController comicController = Get.put(ComicController());
+  @override
+  State<Search> createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
+  String seacrh='';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(
-        () => Column(
-          children: [
-            AnimSearchBar(
-              width: MediaQuery.of(context).size.width - 20,
-              animationDurationInMilli: 1000,
-              helpText: 'Search for a character',
-              textController: searchController.textController.value,
-              onSuffixTap: () {
-                print('Search suffix tapped');
-                log('Search suffix tapped');
-              },
-              rtl: true,
-              suffixIcon: const Icon(Icons.search),
-              prefixIcon: const Icon(Icons.arrow_back),
-              onSubmitted: (String s) {
-                // SearchComic();
-                searchController.searchCharacter();
-              },
-            ),
-            searchController.isLoading.value == false
-                ? Expanded(
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // Number of columns in the grid
-                        mainAxisSpacing:
-                            10, // Vertical spacing between grid items
-                        crossAxisSpacing:
-                            10, // Horizontal spacing between grid items
-                      ),
-                      itemCount: searchController.searchCharacters.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        var character =
-                            searchController.searchCharacters[index];
-                        return GestureDetector(
-                          onTap: () {
-                            // Navigate to character details screen
-                            comicController.setCharacter(character);
-                            Get.toNamed('/details');
-                          },
-                          child: MyHomeCard(character: character),
-                        );
-                      },
-                    ),
-                  )
-                : Image.network('https://thumbs.gfycat.com/DirtyShimmeringHusky-size_restricted.gif')
-          ],
-        ),
+      body: Column(
+        children: [
+          AnimSearchBar(
+            width: MediaQuery.of(context).size.width - 20,
+            animationDurationInMilli: 1000,
+            helpText: 'Search for a character',
+            textController: TextEditingController(),
+            onSuffixTap: () {
+              print('Search suffix tapped');
+            },
+            rtl: true,
+            suffixIcon: Icon(Icons.search),
+            prefixIcon: Icon(Icons.arrow_back),
+            onSubmitted: (String ) {
+              SearchComic();
+            },
+            //suffixIconColor: Colors.white,
+            // onSearchQueryChanged: (query) {
+            //   print(query);
+            // },
+            // searchDecoration: InputDecoration(
+            //   hintText: 'Search',
+            //   hintStyle: TextStyle(
+            //     color: Colors.white,
+            //   ),
+            //   border: InputBorder.none,
+            // ),
+            // searchStyle: TextStyle(
+            //   color: Colors.white,
+            // ),
+            // style: TextStyle(
+            //   color: Colors.white,
+            // ), onSubmitted: (String ) {  },
+          ),
+
+        ]
       ),
     );
   }
 }
+
