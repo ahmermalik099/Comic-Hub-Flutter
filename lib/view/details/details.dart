@@ -11,34 +11,43 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:  AnimateGradient(
-        duration: const Duration(seconds: 2),
-        primaryColors: const [
-          Colors.pink,
-          Colors.pinkAccent,
-          Colors.white,
-        ],
-        secondaryColors: const [
-          Colors.blue,
-          Colors.blueAccent,
-          Colors.white,
-        ],
-        child: Container(
-          child: Obx(
-                () => Column(
+      body: Obx(
+        () => Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Image.asset('assets/bg.jpeg', fit: BoxFit.cover),
+            ),
+            Column(
               children: [
-                Image.network(
-                    comicController.character.value.image!['super_url']!),
-                Text(comicController.character.value.name!),
-                Text(comicController.character.value.deck.toString()),
-
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  child: Image.network(
+                    comicController.character.value.image!['super_url']!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Text(
+                  comicController.character.value.name!,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 23, 20, 20),
+                    fontSize: 25,
+                  ),
+                ),
+                Text(
+                  comicController.character.value.deck.toString(),
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 23, 20, 20),
+                    fontSize: 20,
+                  ),
+                ),
               ],
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 }
-
-

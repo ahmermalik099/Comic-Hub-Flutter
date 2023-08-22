@@ -6,12 +6,12 @@ import '../../../styles/styleSheet.dart';
 
 class MyHomeCard extends StatelessWidget {
   //const MyHomeCard({super.key, this.character, this.teams});
-  const MyHomeCard({
+  MyHomeCard({
     super.key,
     this.character,
     // this.color = Colors.blue,
   });
-  final Color color = Colors.black;
+  final Color color = Color.fromARGB(255, 241, 231, 231);
   final Character? character;
   //final Teams? teams;
   @override
@@ -24,7 +24,7 @@ class MyHomeCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-              color: Colors.black.withOpacity(.05),
+              color: color.withOpacity(.05),
               blurRadius: 5,
               spreadRadius: 5)
         ],
@@ -64,7 +64,6 @@ class MyHomeCard extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     // Color.fromARGB(255, 235, 235, 238).withOpacity(.4),
-                    color.withOpacity(.4),
                     Colors.transparent,
                     color.withOpacity(.9),
                   ],
