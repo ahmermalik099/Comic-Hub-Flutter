@@ -40,6 +40,9 @@ class Search extends StatelessWidget {
                 searchController.searchCharacter();
               },
             ),
+            searchController.searchCharacters.length==0 ?
+            Image.network('https://thumbs.gfycat.com/DirtyShimmeringHusky-size_restricted.gif'):Container(),
+
             searchController.isLoading.value == false
                 ? Expanded(
               child: GridView.builder(

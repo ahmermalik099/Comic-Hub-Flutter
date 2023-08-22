@@ -34,8 +34,8 @@ class MyHomeCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.passthrough,
           children: [
-            character?.image?['screen_url'] == null ||
-                    character?.image?['screen_url'] == ""
+            character?.image?['original_url'] == null ||
+                    character?.image?['original_url'] == ""
                 ? Image.asset(
                     'assets/bg.jpeg',
                     fit: BoxFit.cover,
@@ -44,8 +44,8 @@ class MyHomeCard extends StatelessWidget {
                   )
                 : FadeInImage.assetNetwork(
                     placeholder: 'assets/bg.jpeg',
-                    image: character!.image!['screen_url']!,
-                    fit: BoxFit.cover,
+                    image: character!.image!['original_url']!,
+                    fit: BoxFit.fitHeight,
                   ),
 
 // .network(character!.image!['screen_url']!,

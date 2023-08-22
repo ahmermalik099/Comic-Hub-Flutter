@@ -33,8 +33,13 @@ class _ProfilePageState extends State<ProfilePage> {
   int _currentIndex = 0;
 
   final List<Widget> tabBarPages = [
-    ProfilePage(),
+    // ProfilePage(),
     //SettingPage()
+    Text('1'),
+    SettingPage(),
+    Text('2'),
+    Text('3'),
+    Text('4'),
   ];
 
 
@@ -70,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   SideMenuItemDataTile(
                     isSelected: _currentIndex == 1,
                    // onTap: () => setState(() => _currentIndex = 1),
-                    onTap: () => Get.to(() => SettingPage()),
+                    onTap: () => setState(() => _currentIndex = 1),
                     title: 'Settings',
                     selectedTitleStyle:
                     const TextStyle(fontWeight: FontWeight.w700,color: Colors.yellow),
@@ -78,31 +83,32 @@ class _ProfilePageState extends State<ProfilePage> {
                     selectedIcon: const Icon(Icons.settings),
                     titleStyle: const TextStyle(color: Colors.deepPurpleAccent),
                   ),
-                  // const SideMenuItemDataTitle(
-                  //   title: 'Account',
-                  //   textAlign: TextAlign.center,
-                  // ),
-                  // SideMenuItemDataTile(
-                  //   isSelected: _currentIndex == 2,
-                  //   onTap: () => setState(() => _currentIndex = 2),
-                  //   title: 'Item 3',
-                  //   icon: const Icon(Icons.play_arrow),
-                  // ),
-                  // SideMenuItemDataTile(
-                  //   isSelected: _currentIndex == 3,
-                  //   onTap: () => setState(() => _currentIndex = 3),
-                  //   title: 'Item 4',
-                  //   icon: const Icon(Icons.car_crash),
-                  // ),
+
+                  const SideMenuItemDataTitle(
+                    title: 'Account',
+                    textAlign: TextAlign.center,
+                  ),
+                  SideMenuItemDataTile(
+                    isSelected: _currentIndex == 2,
+                    onTap: () => setState(() => _currentIndex = 2),
+                    title: 'Item 3',
+                    icon: const Icon(Icons.play_arrow),
+                  ),
+                  SideMenuItemDataTile(
+                    isSelected: _currentIndex == 3,
+                    onTap: () => setState(() => _currentIndex = 3),
+                    title: 'Item 4',
+                    icon: const Icon(Icons.car_crash),
+                  ),
                 ],
-                footer: const Text('Comic Hub'),
+                footer: Text('$_currentIndex.toString()'),
               );
             },
           ),
 
-          ////Main body
+          //Main body
           Expanded(
-              child: UserDetails(),
+              child: tabBarPages[_currentIndex],
           )
 
         ],
