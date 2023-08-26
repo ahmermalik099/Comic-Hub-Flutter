@@ -19,8 +19,8 @@ class MyCollectionCard extends StatelessWidget {
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-      width: 200,
-      height: 200,
+      width: double.infinity,
+      height: 500,
       margin: const EdgeInsets.all(10),
       child: Stack(
         children: [
@@ -28,8 +28,8 @@ class MyCollectionCard extends StatelessWidget {
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
-            width: 200,
-            height: 200,
+            width: double.infinity,
+            height: 500,
             child: Image.network(
 
               collection?.image?['screen_url'] ?? '',

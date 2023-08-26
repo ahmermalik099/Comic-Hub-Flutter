@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 TextStyle headingTextStyle=const TextStyle(
-  fontSize: 20,
+  fontSize: 28,
   fontWeight: FontWeight.bold,
   color: Colors.black,
   fontStyle: FontStyle.italic,

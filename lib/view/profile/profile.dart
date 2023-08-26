@@ -33,13 +33,9 @@ class _ProfilePageState extends State<ProfilePage> {
   int _currentIndex = 0;
 
   final List<Widget> tabBarPages = [
-    // ProfilePage(),
-    //SettingPage()
-    Text('1'),
-    SettingPage(),
-    Text('2'),
-    Text('3'),
-    Text('4'),
+    UserDetails(),
+    SettingMainPage(),
+
   ];
 
 
@@ -84,22 +80,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     titleStyle: const TextStyle(color: Colors.deepPurpleAccent),
                   ),
 
-                  const SideMenuItemDataTitle(
-                    title: 'Account',
-                    textAlign: TextAlign.center,
-                  ),
-                  SideMenuItemDataTile(
-                    isSelected: _currentIndex == 2,
-                    onTap: () => setState(() => _currentIndex = 2),
-                    title: 'Item 3',
-                    icon: const Icon(Icons.play_arrow),
-                  ),
-                  SideMenuItemDataTile(
-                    isSelected: _currentIndex == 3,
-                    onTap: () => setState(() => _currentIndex = 3),
-                    title: 'Item 4',
-                    icon: const Icon(Icons.car_crash),
-                  ),
                 ],
                 footer: Text('$_currentIndex.toString()'),
               );
@@ -182,37 +162,35 @@ class _UserDetailsState extends State<UserDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          color: Colors.white,
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 100,
-                  backgroundImage: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHFXcvkgaVetaFH-J4M2yOrIUCBCUVRhkMcA&usqp=CAU').image,
-                ),
-                SizedBox(height: 10),
-                ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text(email),
-                ),
-                ListTile(
-                  leading: Icon(Icons.phone),
-                  title: Text(phoneNumber),
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _editProfile,
-                  child: Text('Edit Profile'),
-                ),
-              ],
+    return Container(
+      color: Colors.white,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircleAvatar(
+              radius: 100,
+              backgroundImage: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHFXcvkgaVetaFH-J4M2yOrIUCBCUVRhkMcA&usqp=CAU').image,
             ),
-          ),
+            SizedBox(height: 10),
+            Center(
+              child: ListTile(
+                leading: Icon(Icons.person),
+                title: Text(email),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.phone),
+              title: Text(phoneNumber),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _editProfile,
+              child: Text('Edit Profile'),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

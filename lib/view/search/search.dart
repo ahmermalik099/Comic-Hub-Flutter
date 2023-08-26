@@ -69,7 +69,7 @@ class Search extends StatelessWidget {
                 },
               ),
             )
-                : Image.network('https://thumbs.gfycat.com/DirtyShimmeringHusky-size_restricted.gif')
+                : Container()
           ],
         ),
       ),
